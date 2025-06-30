@@ -1,0 +1,237 @@
+/* Mørk bakgrunn for CityBuilder */
+.body {
+  background-color: #2C3E50; /* Mørk bakgrunnsfarge */
+  color: #ecf0f1; /* Lys tekstfarge for kontrast */  
+}
+
+
+.city-container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Topp-panel for penger, ressurser og lykke */
+.top-panel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ecf0f1;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.building-selector {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.building-selector button {
+  font-size: 16px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: background-color 0.3s, border 0.3s, transform 0.2s;
+}
+
+.building-selector button.selected {
+  border: 2px solid #3498db;
+  background-color: #ecf0f1;
+  transform: scale(1.1);
+}
+
+.building-selector button:hover {
+  background-color: #bdc3c7;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 70px);
+  gap: 5px;
+  margin: 20px auto;
+  width: max-content;
+}
+
+/* CELL STYLING */
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  border: 2px solid #ddd;
+  background-color: #f3f3f3;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+
+/* Glød-effekt på hover */
+.cell:hover {
+  background-color: #dcdcdc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Forhåndsvisning av bygning */
+.cell.preview {
+  background-color: rgba(0, 255, 0, 0.2);
+  border: 2px dashed green;
+}
+
+/* ANIMASJONER */
+.cell.building {
+  animation: build 0.8s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.cell.upgrade {
+  animation: upgrade 0.5s ease-in-out;
+}
+
+@keyframes build {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes upgrade {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* TOOLTIP */
+.cell .tooltip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cell:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* EFFEKTER FOR PENGER */
+.money-animate {
+  animation: moneyAnim 1s ease-in-out;
+}
+
+@keyframes moneyAnim {
+  0% {
+    font-size: 1.5rem;
+    color: green;
+  }
+  50% {
+    font-size: 2rem;
+    color: gold;
+  }
+  100% {
+    font-size: 1.5rem;
+    color: green;
+  }
+}
+
+/* KNAPP FOR Å SAMLE INNTEKT */
+.collect-btn {
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 10px;
+  cursor: pointer;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.collect-btn:hover {
+  background: darkgreen;
+  transform: scale(1.05);
+}
+
+/* FARGER PÅ BYGNINGER */
+.house {
+  background-color: #ffebcd;
+}
+
+.office {
+  background-color: #f0f8ff;
+}
+
+.factory {
+  background-color: #f5deb3;
+}
+
+.school {
+  background-color: #fafad2;
+}
+
+.hospital {
+  background-color: #e0ffff;
+}
+
+/* VEIER */
+.road {
+  background-color: #d3d3d3;
+  border-radius: 5px;
+}
+
+.highway {
+  background-color: #ffcc00;
+}
+
+.luxury-road {
+  background-color: #b0e0e6;
+}
+
+.building {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.house { background-color: #4CAF50; }
+.office { background-color: #2E86C1; }
+.school { background-color: #F4D03F; }
+.hospital { background-color: #E74C3C; }
+.road { background-color: #7F8C8D; }
+.highway { background-color: #2C3E50; }
+.luxury-road { background-color: #D35400; }
+

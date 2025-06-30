@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    overflow: hidden; /* Hindrer rulling */
+  }
+  
+  /* StartScreen */
+  .start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    width: 100%;
+    background-image: url('../Pictures/Background.png'); /* Bakgrunnsbilde for StartScreen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .start-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  button {
+    padding: 15px 30px; /* Øk størrelsen på knappene */
+    font-size: 20px; /* Større tekst */
+    cursor: pointer;
+    background-color: #3498db; /* Blåfarge (kan endres til en annen farge) */
+    color: white;
+    border: none;
+    border-radius: 10px; /* Runde hjørner */
+    transition: background-color 0.3s, transform 0.2s; /* Legg til en smooth overgang */
+  }
+  
+  button:hover {
+    background-color: #2980b9; /* Mørkere blåfarge på hover */
+    transform: scale(1.1); /* Knappen popper litt ut */
+  }
+  
+  .language-switcher {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .language-switcher button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .language-switcher button:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+  }
+  
+  

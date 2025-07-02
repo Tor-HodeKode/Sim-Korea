@@ -6,6 +6,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<StartScreen />} />
         <Route path="/startscreen" element={<StartScreen />} />
         <Route path="/citybuilder" element={<CityBuilder />} />
       </Routes>

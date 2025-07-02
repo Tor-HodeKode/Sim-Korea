@@ -1,73 +1,400 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden; /* Hindrer rulling */
+}
+
+/* StartScreen */
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  width: 100%;
+  background-image: url("../Pictures/Background.png"); /* Bakgrunnsbilde for StartScreen */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.start-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Økt spacing mellom knapper */
+}
+
+/* Moderne glassmorfisme knapper */
+button {
+  padding: 18px 40px; /* Større knapper */
+  font-size: 22px; /* Større tekst */
+  font-weight: bold;
+  cursor: pointer;
+
+  /* Glassmorfisme effekt */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px; /* Mer runde hjørner */
+
+  /* Neon glød effekt */
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(102, 126, 234, 0.3);
+
+  /* Smooth overgang */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Animert bakgrunn effekt */
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(102, 126, 234, 0.4),
+    transparent
+  );
+  transition: all 0.6s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  /* Kraftigere hover effekt */
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.6);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 30px rgba(102, 126, 234, 0.6);
+  text-shadow: 0 0 20px rgba(102, 126, 234, 1);
+}
+
+button:active {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 15px rgba(102, 126, 234, 0.4);
+}
+
+.language-switcher {
+  margin-top: 30px; /* Økt margin */
+  display: flex;
+  gap: 15px; /* Økt gap */
+  justify-content: center;
+}
+
+/* Kompakte språk-knapper med samme stil */
+.language-switcher button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  /* Samme glassmorfisme som hovedknapper men mindre */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(118, 75, 162, 0.6);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 15px rgba(118, 75, 162, 0.2);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.language-switcher button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(118, 75, 162, 0.3),
+    transparent
+  );
+  transition: all 0.5s;
+}
+
+.language-switcher button:hover::before {
+  left: 100%;
+}
+
+.language-switcher button:hover {
+  background: rgba(118, 75, 162, 0.15);
+  border-color: rgba(118, 75, 162, 0.5);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 0 20px rgba(118, 75, 162, 0.5);
+  text-shadow: 0 0 15px rgba(118, 75, 162, 0.9);
+}
+
+.language-switcher button:active {
+  transform: translateY(-1px) scale(1.04);
+}
+
+/* Title section styling */
+.title-section {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.title-section h1 {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% {
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
   }
-  
-  html, body {
-    height: 100%;
-    overflow: hidden; /* Hindrer rulling */
+  100% {
+    filter: drop-shadow(0 0 40px rgba(118, 75, 162, 0.8));
   }
-  
-  /* StartScreen */
-  .start-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: white;
-    text-align: center;
-    width: 100%;
-    background-image: url('../Pictures/Background.png'); /* Bakgrunnsbilde for StartScreen */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 15px rgba(102, 126, 234, 0.6);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Button type differentiation */
+.primary-button {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  border: 2px solid rgba(102, 126, 234, 0.6) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 30px rgba(102, 126, 234, 0.5) !important;
+  font-size: 24px !important;
+  padding: 20px 45px !important;
+  transform: scale(1.1);
+}
+
+.primary-button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea) !important;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 40px rgba(102, 126, 234, 0.8) !important;
+  transform: translateY(-5px) scale(1.15) !important;
+}
+
+.secondary-button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Language selector improvements */
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.language-grid button {
+  padding: 12px 20px !important;
+  font-size: 16px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+.language-grid button.active {
+  background: rgba(118, 75, 162, 0.3) !important;
+  border-color: rgba(118, 75, 162, 0.8) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 25px rgba(118, 75, 162, 0.6) !important;
+  text-shadow: 0 0 15px rgba(118, 75, 162, 1) !important;
+}
+
+.back-button {
+  background: rgba(255, 107, 53, 0.2) !important;
+  border: 2px solid rgba(255, 107, 53, 0.5) !important;
+  color: #ffffff !important;
+  padding: 12px 25px !important;
+  font-size: 16px !important;
+  margin-top: 10px;
+}
+
+.back-button:hover {
+  background: rgba(255, 107, 53, 0.3) !important;
+  border-color: rgba(255, 107, 53, 0.8) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 107, 53, 0.5) !important;
+  text-shadow: 0 0 15px rgba(255, 107, 53, 0.8) !important;
+}
+
+/* Ekstra animasjoner og effekter */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(102, 126, 234, 0.3);
   }
-  
-  .start-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  50% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 30px rgba(102, 126, 234, 0.5);
   }
-  
+  100% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(102, 126, 234, 0.3);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Hovedknapper med subtil pulsering */
+.start-buttons button {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+/* Hovedknapper med subtil flytende effekt */
+.start-buttons button:nth-child(1) {
+  animation: pulse 3s infinite ease-in-out, float 4s infinite ease-in-out;
+  animation-delay: 0s, 0.5s;
+}
+
+.start-buttons button:nth-child(2) {
+  animation: pulse 3s infinite ease-in-out, float 4s infinite ease-in-out;
+  animation-delay: 0.5s, 1s;
+}
+
+.start-buttons button:nth-child(3) {
+  animation: pulse 3s infinite ease-in-out, float 4s infinite ease-in-out;
+  animation-delay: 1s, 1.5s;
+}
+
+/* Pause animasjoner på hover for bedre UX */
+.start-buttons button:hover {
+  animation-play-state: paused;
+} /* Responsiv design for mindre skjermer */
+@media (max-width: 768px) {
+  .title-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    padding: 0 20px;
+  }
+
+  .primary-button {
+    font-size: 20px !important;
+    padding: 18px 40px !important;
+    transform: scale(1.05) !important;
+  }
+
+  .primary-button:hover {
+    transform: translateY(-3px) scale(1.08) !important;
+  }
+
   button {
-    padding: 15px 30px; /* Øk størrelsen på knappene */
-    font-size: 20px; /* Større tekst */
-    cursor: pointer;
-    background-color: #3498db; /* Blåfarge (kan endres til en annen farge) */
-    color: white;
-    border: none;
-    border-radius: 10px; /* Runde hjørner */
-    transition: background-color 0.3s, transform 0.2s; /* Legg til en smooth overgang */
+    padding: 15px 35px;
+    font-size: 18px;
+    letter-spacing: 1px;
   }
-  
-  button:hover {
-    background-color: #2980b9; /* Mørkere blåfarge på hover */
-    transform: scale(1.1); /* Knappen popper litt ut */
-  }
-  
-  .language-switcher {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-  
+
   .language-switcher button {
     padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
+    font-size: 14px;
   }
-  
-  .language-switcher button:hover {
-    background-color: #2980b9;
-    transform: scale(1.1);
+
+  .language-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 400px;
   }
-  
-  
+
+  .language-grid button {
+    padding: 10px 15px !important;
+    font-size: 14px !important;
+  }
+
+  .start-buttons {
+    gap: 15px;
+  }
+
+  .language-switcher {
+    gap: 12px;
+  }
+
+  .title-section {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-section h1 {
+    font-size: 2rem;
+  }
+
+  .language-grid {
+    grid-template-columns: 1fr;
+    max-width: 250px;
+  }
+
+  .primary-button {
+    font-size: 18px !important;
+    padding: 16px 35px !important;
+  }
+}

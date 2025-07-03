@@ -12,70 +12,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useCallback, useMemo, React } from "react";
 import Particles from "react-tsparticles";
+import CityBuilderInfo from "./CityBuilderInfo";
 import "./CityBuilder.css";
 
 const coinSound = "/Sounds/Cash.mp3";
 const gridSize = 10;
-
-// Achievement definitions
-const achievements = [
-  {
-    id: "first_building",
-    name: "Første Bygning",
-    description: "Bygg din første bygning",
-    icon: "🏠",
-    requirement: 1,
-    type: "buildings_built",
-  },
-  {
-    id: "house_master",
-    name: "Husmester",
-    description: "Bygg 5 hus",
-    icon: "🏘️",
-    requirement: 5,
-    type: "house_count",
-  },
-  {
-    id: "rich_player",
-    name: "Rik Spiller",
-    description: "Samle 10,000 kroner",
-    icon: "💰",
-    requirement: 10000,
-    type: "money_earned",
-  },
-  {
-    id: "upgrade_expert",
-    name: "Oppgraderingsekspert",
-    description: "Oppgrader 3 bygninger",
-    icon: "⬆️",
-    requirement: 3,
-    type: "upgrades_done",
-  },
-  {
-    id: "happy_city",
-    name: "Lykkelig By",
-    description: "Nå 100% lykke",
-    icon: "😊",
-    requirement: 100,
-    type: "max_happiness",
-  },
-  {
-    id: "builder_pro",
-    name: "Byggemester",
-    description: "Bygg 20 bygninger",
-    icon: "🏗️",
-    requirement: 20,
-    type: "buildings_built",
-  },
-  {
-    id: "millionaire",
-    name: "Millionær",
-    description: "Samle 1,000,000 kroner",
-    icon: "💎",
-    requirement: 1000000,
-    type: "money_earned",
-  },
-];
 
 // Daily quests
 const dailyQuests = [
@@ -137,6 +78,57 @@ const newBuildings = [
     resources: { water: 50, power: -200, materials: 200 },
     icon: faBuilding,
     unlockLevel: 8,
+  },
+  // NEW RESOURCE PRODUCERS
+  {
+    type: "waterplant",
+    name: "Vannverk",
+    cost: 800,
+    income: 30,
+    resources: { water: -150, power: 80, materials: 100 },
+    icon: faBuilding,
+    unlockLevel: 6,
+    resourceProduction: { water: 150 },
+  },
+  {
+    type: "solarfarm",
+    name: "Solfarm",
+    cost: 1200,
+    income: 40,
+    resources: { water: 20, power: -100, materials: 150 },
+    icon: faBuilding,
+    unlockLevel: 7,
+    resourceProduction: { power: 100 },
+  },
+  {
+    type: "quarry",
+    name: "Steinbrudd",
+    cost: 600,
+    income: 20,
+    resources: { water: 30, power: 60, materials: -80 },
+    icon: faBuilding,
+    unlockLevel: 4,
+    resourceProduction: { materials: 80 },
+  },
+  {
+    type: "recycling",
+    name: "Gjenvinning",
+    cost: 400,
+    income: 25,
+    resources: { water: 40, power: 50, materials: -60 },
+    icon: faTree,
+    unlockLevel: 5,
+    resourceProduction: { materials: 60, water: 30 },
+  },
+  {
+    type: "windfarm",
+    name: "Vindpark",
+    cost: 900,
+    income: 35,
+    resources: { water: 10, power: -120, materials: 80 },
+    icon: faBuilding,
+    unlockLevel: 6,
+    resourceProduction: { power: 120 },
   },
 ];
 
@@ -308,6 +300,11 @@ function CityBuilder() {
       factory: "Fabrikk",
       park: "Park",
       powerplant: "Kraftverk",
+      waterplant: "Vannverk",
+      solarfarm: "Solfarm",
+      quarry: "Steinbrudd",
+      recycling: "Gjenvinning",
+      windfarm: "Vindpark",
       // Achievements
       firstBuilding: "Første Bygning",
       firstBuildingDesc: "Bygg din første bygning",
@@ -375,6 +372,11 @@ function CityBuilder() {
       factory: "Factory",
       park: "Park",
       powerplant: "Power Plant",
+      waterplant: "Water Plant",
+      solarfarm: "Solar Farm",
+      quarry: "Quarry",
+      recycling: "Recycling Plant",
+      windfarm: "Wind Farm",
       // Achievements
       firstBuilding: "First Building",
       firstBuildingDesc: "Build your first building",
@@ -442,6 +444,11 @@ function CityBuilder() {
       factory: "Fabrik",
       park: "Park",
       powerplant: "Kraftwerk",
+      waterplant: "Wasserwerk",
+      solarfarm: "Solarpark",
+      quarry: "Steinbruch",
+      recycling: "Recyclinganlage",
+      windfarm: "Windpark",
       // Achievements
       firstBuilding: "Erstes Gebäude",
       firstBuildingDesc: "Baue dein erstes Gebäude",
@@ -669,6 +676,56 @@ function CityBuilder() {
       icon: faBuilding,
       unlockLevel: 8,
     },
+    {
+      type: "waterplant",
+      name: t.waterplant,
+      cost: 800,
+      income: 30,
+      resources: { water: -150, power: 80, materials: 100 },
+      icon: faBuilding,
+      unlockLevel: 6,
+      resourceProduction: { water: 150 },
+    },
+    {
+      type: "solarfarm",
+      name: t.solarfarm,
+      cost: 1200,
+      income: 40,
+      resources: { water: 20, power: -100, materials: 150 },
+      icon: faBuilding,
+      unlockLevel: 7,
+      resourceProduction: { power: 100 },
+    },
+    {
+      type: "quarry",
+      name: t.quarry,
+      cost: 600,
+      income: 20,
+      resources: { water: 30, power: 60, materials: -80 },
+      icon: faBuilding,
+      unlockLevel: 4,
+      resourceProduction: { materials: 80 },
+    },
+    {
+      type: "recycling",
+      name: t.recycling,
+      cost: 400,
+      income: 25,
+      resources: { water: 40, power: 50, materials: -60 },
+      icon: faTree,
+      unlockLevel: 5,
+      resourceProduction: { materials: 60, water: 30 },
+    },
+    {
+      type: "windfarm",
+      name: t.windfarm,
+      cost: 900,
+      income: 35,
+      resources: { water: 10, power: -120, materials: 80 },
+      icon: faBuilding,
+      unlockLevel: 6,
+      resourceProduction: { power: 120 },
+    },
   ];
   const [grid, setGrid] = useState(
     () =>
@@ -701,12 +758,25 @@ function CityBuilder() {
   }, [language]);
 
   // Initialize selectedBuilding after translation functions are defined
-  const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [selectedBuilding, setSelectedBuilding] = useState(() => {
+    // Initialize with first building from getTranslatedBuildings
+    const translatedBuildings =
+      translations[localStorage.getItem("gameLanguage") || "no"];
+    return {
+      type: "house",
+      name: translatedBuildings ? translatedBuildings.house : "Hus",
+      cost: 50,
+      income: 0,
+      resources: { water: 10, power: 5, materials: 20 },
+      icon: faHouse,
+    };
+  });
 
-  // Set initial building when component mounts
+  // Set initial building when component mounts or language changes
   useEffect(() => {
-    if (!selectedBuilding) {
-      setSelectedBuilding(getTranslatedBuildings()[0]);
+    const translatedBuildings = getTranslatedBuildings();
+    if (translatedBuildings.length > 0) {
+      setSelectedBuilding(translatedBuildings[0]);
     }
   }, [language]);
 
@@ -760,6 +830,9 @@ function CityBuilder() {
 
   // Available buildings (unlocked by level)
   const [availableBuildings, setAvailableBuildings] = useState(buildings);
+
+  // Info panel state
+  const [showInfo, setShowInfo] = useState(false);
 
   // Optimalisert localStorage save med debouncing
   const saveToLocalStorage = useCallback(() => {
@@ -902,21 +975,45 @@ function CityBuilder() {
     return () => clearInterval(autoCollectInterval);
   }, [grid, multiplier, language]);
 
-  // Optimalisert ressurs regenerering
+  // Optimalisert ressurs regenerering med bygningsproduksjon
   useEffect(() => {
     const resourceRegenInterval = setInterval(() => {
-      setResources((prev) => ({
-        water: Math.min(prev.water + 10, 1000), // Økt regen men sjeldnere
-        power: Math.min(prev.power + 6, 1000),
-        materials: Math.min(prev.materials + 4, 1000),
-      }));
-    }, 6000); // Økt til hver 6. sekund
+      setResources((prev) => {
+        const allBuildings = [
+          ...getTranslatedBuildings(),
+          ...getTranslatedNewBuildings(),
+        ];
+
+        // Calculate production from buildings
+        let waterProduction = 10; // Base regeneration
+        let powerProduction = 6;
+        let materialsProduction = 4;
+
+        grid.flat().forEach((cell) => {
+          if (cell) {
+            const building = allBuildings.find((b) => b.type === cell);
+            if (building && building.resourceProduction) {
+              waterProduction += building.resourceProduction.water || 0;
+              powerProduction += building.resourceProduction.power || 0;
+              materialsProduction += building.resourceProduction.materials || 0;
+            }
+          }
+        });
+
+        return {
+          water: Math.min(prev.water + waterProduction, 2000), // Increased cap
+          power: Math.min(prev.power + powerProduction, 2000),
+          materials: Math.min(prev.materials + materialsProduction, 2000),
+        };
+      });
+    }, 6000); // Every 6 seconds
 
     return () => clearInterval(resourceRegenInterval);
-  }, []);
+  }, [grid, language]); // Add grid and language as dependencies
 
   const placeBuilding = (row, col) => {
     if (
+      selectedBuilding &&
       money >= selectedBuilding.cost &&
       !grid[row][col] &&
       resources.water >= selectedBuilding.resources.water &&
@@ -956,12 +1053,18 @@ function CityBuilder() {
       // Animasjonseffekt
       const cellKey = `${row}-${col}`;
       setBuildingAnimations((prev) => ({ ...prev, [cellKey]: "building" }));
+
+      // Prevent scrolling during animation
+      document.body.style.overflow = "hidden";
+
       setTimeout(() => {
         setBuildingAnimations((prev) => {
           const newAnimations = { ...prev };
           delete newAnimations[cellKey];
           return newAnimations;
         });
+        // Re-enable scrolling after animation
+        document.body.style.overflow = "auto";
       }, 1200);
 
       // Streak system
@@ -980,10 +1083,14 @@ function CityBuilder() {
       audio.volume = 0.3;
       audio.play();
     } else {
-      // Reset streak på feil
+      // Reset streak på feil eller hvis ingen bygning er valgt
       setStreak(0);
       setMultiplier(1);
-      showFloatingTextEffect(t.notEnoughResources);
+      if (!selectedBuilding) {
+        showFloatingTextEffect("❌ Ingen bygning valgt!");
+      } else {
+        showFloatingTextEffect(t.notEnoughResources);
+      }
     }
   };
 
@@ -1138,11 +1245,15 @@ function CityBuilder() {
             className={`cell ${building ? `building ${building.type}` : ""} ${
               buildingAnimations[`${rowIndex}-${colIndex}`] || ""
             }`}
-            onClick={() =>
-              building && building.upgrade
-                ? upgradeBuilding(rowIndex, colIndex)
-                : placeBuilding(rowIndex, colIndex)
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (building && building.upgrade) {
+                upgradeBuilding(rowIndex, colIndex);
+              } else if (selectedBuilding) {
+                placeBuilding(rowIndex, colIndex);
+              }
+            }}
           >
             {building ? <FontAwesomeIcon icon={building.icon} /> : "⬜"}
             {building && building.upgrade && (
@@ -1321,11 +1432,23 @@ function CityBuilder() {
           return (
             <button
               key={building.type}
-              onClick={() => !isLocked && setSelectedBuilding(building)}
+              onClick={() => {
+                if (!isLocked) {
+                  setSelectedBuilding(building);
+                }
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                if (!isLocked) {
+                  setSelectedBuilding(building);
+                  setShowInfo(true);
+                }
+              }}
               className={`${
                 selectedBuilding?.type === building.type ? "selected" : ""
               } ${isLocked ? "locked" : ""}`}
               disabled={isLocked}
+              title="Høyreklikk for mer info"
             >
               <FontAwesomeIcon icon={building.icon} /> {building.name} ($
               {building.cost})
@@ -1337,6 +1460,17 @@ function CityBuilder() {
             </button>
           );
         })}
+
+        {/* Info button for selected building */}
+        {selectedBuilding && (
+          <button
+            className="info-button"
+            onClick={() => setShowInfo(true)}
+            title="Vis bygningsinformasjon"
+          >
+            ℹ️ Info
+          </button>
+        )}
       </div>
 
       <div className="grid">{renderedGrid}</div>
@@ -1386,6 +1520,18 @@ function CityBuilder() {
         🏆 {t.achievements} ({unlockedAchievements.length}/
         {getTranslatedAchievements().length})
       </button>
+
+      {/* Building Info Panel */}
+      {showInfo && (
+        <CityBuilderInfo
+          selectedBuilding={selectedBuilding}
+          language={language}
+          playerLevel={playerLevel}
+          resources={resources}
+          money={money}
+          onClose={() => setShowInfo(false)}
+        />
+      )}
     </div>
   );
 }

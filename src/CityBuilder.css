@@ -8,7 +8,7 @@ html {
   overflow-x: hidden; /* Prevent horizontal scroll */
   overflow-y: auto; /* Allow vertical scroll */
   /* Scroll performance optimizations */
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Changed from smooth to auto to prevent unwanted scrolling */
   -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
 }
 
@@ -25,7 +25,6 @@ html {
   position: relative;
 
   /* Performance optimizations */
-  will-change: auto;
   transform: translateZ(
     0
   ); /* Force hardware acceleration for smooth scrolling */
@@ -71,7 +70,6 @@ html {
   color: white;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
   animation: panelFloat 4s ease-in-out infinite; /* Slower animation */
-  will-change: transform;
   transform: translateZ(0); /* Force hardware acceleration */
 }
 
@@ -109,13 +107,16 @@ html {
   color: white;
   font-weight: bold;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Reduced transition properties */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   overflow: hidden;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  /* Performance optimizations */
-  will-change: transform, box-shadow;
-  transform: translateZ(0); /* Force hardware acceleration */
+  transform: translateZ(0);
+}
+
+.building-selector button:hover {
+  transform: translateY(-3px) scale(1.05) translateZ(0);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
 }
 
 .building-selector button::before {
@@ -155,11 +156,6 @@ html {
   }
 }
 
-.building-selector button:hover {
-  transform: translateY(-3px) scale(1.05) translateZ(0);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-}
-
 /* GRID med forbedret synlighet mot bakgrunn - kompakt størrelse og optimalisert performance */
 .grid {
   display: grid;
@@ -174,8 +170,10 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   /* Performance optimizations */
-  will-change: auto;
   transform: translateZ(0); /* Force hardware acceleration */
+  /* Prevent scrolling during interactions */
+  position: relative;
+  contain: layout style paint; /* Contain layout changes */
 }
 
 /* CELL STYLING med bedre kontrast - kompakt størrelse og optimalisert performance */
@@ -195,8 +193,11 @@ html {
   font-size: 1.2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   /* Performance optimizations */
-  will-change: transform, box-shadow;
   transform: translateZ(0); /* Force hardware acceleration */
+  /* Prevent scroll jumps */
+  touch-action: manipulation; /* Prevent zoom/scroll on touch */
+  user-select: none; /* Prevent text selection */
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
 
 /* Neon glød-effekt på hover - justert for mindre celler og optimalisert performance */
@@ -214,7 +215,6 @@ html {
   border: 1px solid #00ff00;
   box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
   animation: previewPulse 1.5s infinite;
-  will-change: transform, box-shadow;
 }
 
 @keyframes previewPulse {
@@ -233,12 +233,13 @@ html {
 .cell.building {
   animation: epicBuild 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   box-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
-  will-change: transform, opacity, box-shadow;
+  /* Prevent scrolling during animation */
+  position: relative;
+  z-index: 1;
 }
 
 .cell.upgrade {
   animation: epicUpgrade 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  will-change: transform, opacity, box-shadow;
 }
 
 @keyframes epicBuild {
@@ -312,7 +313,6 @@ html {
 /* SPEKTAKULÆRE PENGE-EFFEKTER - optimalisert for performance */
 .money-animate {
   animation: epicMoneyAnim 1s ease-out; /* Shorter and simpler animation */
-  will-change: color, text-shadow; /* Only animate necessary properties */
 }
 
 @keyframes epicMoneyAnim {
@@ -349,7 +349,6 @@ html {
   letter-spacing: 1px;
   display: block; /* Ensure it's a block element */
   /* Performance optimizations */
-  will-change: transform, box-shadow;
   transform: translateZ(0); /* Force hardware acceleration */
 }
 
@@ -497,7 +496,6 @@ html {
   z-index: 1000;
   pointer-events: none;
   animation: floatUp 1.5s ease-out forwards; /* Shorter animation */
-  will-change: transform, opacity; /* Optimize for animation */
 }
 
 @keyframes floatUp {
@@ -540,7 +538,6 @@ html {
   right: -3px;
   font-size: 0.6rem;
   animation: bounce 2s infinite; /* Slower animation */
-  will-change: transform;
 }
 
 @keyframes bounce {
@@ -601,7 +598,6 @@ html {
   animation: backgroundShift 20s ease-in-out infinite; /* Slower animation */
   pointer-events: none;
   z-index: 0;
-  will-change: opacity;
   transform: translateZ(0); /* Force hardware acceleration */
 }
 
@@ -886,13 +882,13 @@ body {
   box-sizing: border-box;
 }
 
-/* Optimize elements that might cause repaints during scroll */
-.cell,
-.building-selector button,
-.top-panel,
-.resource-panel,
-.stats-panel {
-  contain: layout style paint;
+/* Optimize critical elements only */
+.cell {
+  contain: layout style;
+}
+
+.building-selector button {
+  contain: layout style;
 }
 
 /* Prevent auto-scrolling and layout shifts */
@@ -920,7 +916,7 @@ body {
 
 /* Stabilize floating elements */
 .floating-text {
-  contain: layout style paint; /* Prevent layout recalculation */
+  contain: layout style;
 }
 
 /* Reduce motion for users who prefer it */
@@ -946,4 +942,47 @@ body {
   .cell.preview {
     animation: none;
   }
+}
+
+/* Info button styling */
+.info-button {
+  background: linear-gradient(145deg, #3498db, #2980b9) !important;
+  border: 2px solid rgba(52, 152, 219, 0.4);
+  color: white;
+  font-weight: bold;
+  padding: 15px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 15px rgba(52, 152, 219, 0.3);
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-button:hover {
+  background: linear-gradient(145deg, #2980b9, #1f618d) !important;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(52, 152, 219, 0.4);
+  border-color: rgba(52, 152, 219, 0.6);
+}
+
+.info-button:active {
+  transform: translateY(0) scale(1.02);
+}
+
+/* Prevent scroll jumps during cell animations */
+.city-container.animating {
+  overflow: hidden;
+}
+
+/* Prevent layout shifts during animations */
+.cell.building,
+.cell.upgrade {
+  will-change: transform, opacity;
+}
+
+.cell.building:after,
+.cell.upgrade:after {
+  will-change: auto;
 }

@@ -4,7 +4,7 @@ import CityBuilder from "./CityBuilder";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Sim-Korea">
       <Routes>
         <Route path="/" element={<StartScreen />} />
         <Route path="/startscreen" element={<StartScreen />} />

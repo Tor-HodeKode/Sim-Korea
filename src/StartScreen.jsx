@@ -81,7 +81,7 @@ function StartScreen({ onSettings, onLanguage, onSaves }) {
   };
 
   const handlePlay = () => {
-    navigate("/game");
+    navigate("/citybuilder");
   };
 
   const toggleMusic = () => {
